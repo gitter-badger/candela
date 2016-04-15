@@ -5,7 +5,7 @@ var GruntWatchPlugin = require('./grunt-watch-plugin.js');
 module.exports = {
   entry: './mainPage.js',
   output: {
-    path: 'web_client/extra',
+    path: 'web_client/lib',
     filename: 'webpack_bundle.js'
   },
   plugins: [
@@ -19,24 +19,28 @@ module.exports = {
   module: {
     loaders: [
       {
+        test: /\.jpe?g$|\.gif$|\.png$|\.woff$|\.wav$|\.mp3$|\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$|\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'url-loader'
+      },
+      {
+        test: /\.scss$/,
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
       },
       {
         test: /\.html$/,
-        loader: 'html?attrs=img:src'
-      },
-      {
-        test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
-        loader: 'url'
+        loader: 'html-loader?attrs=img:src'
       },
       {
         test: /\.json$/,
-        loader: 'json-loader'
+        loaders: ['json-loader', 'strip-json-comments-loader']
       },
       {
         test: /\.jade$/,
-        loaders: ['jade']
+        loaders: ['jade-loader']
       },
       {
         test: /\.js$/,
